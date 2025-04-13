@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "PodFlare Website",
   "scripts": {
-    "start": "live-server --port=3000 --open=index.html"
+    "start": "live-server --port=3000 --open=index.html",
+    "build": "echo 'No build step needed for static site'",
+    "dev": "live-server --port=3000 --open=index.html"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
