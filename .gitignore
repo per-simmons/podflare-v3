@@ -1,0 +1,7 @@
+# Ignore large video files
+video-portfolio-updated/*.mp4
+video-thumbnails-updated/*.mp4
+*.mp4
+
+# Mac system files
+.DS_Store 
