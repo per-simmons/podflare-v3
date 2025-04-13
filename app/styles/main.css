@@ -252,8 +252,11 @@ p {
 
 .btn-nav:hover {
     background: var(--accent);
-    color: var(--black);
+    color: #000 !important; /* Force black text on hover */
     transform: translateY(-2px);
+    border-color: var(--accent);
+    text-shadow: none; /* Remove any text shadow */
+    font-weight: 600; /* Make text slightly bolder for better contrast */
 }
 
 /* Navbar Styles */
@@ -1398,7 +1401,30 @@ p {
 
 @media (max-width: 768px) {
     .services-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .service-card {
+        min-width: auto !important;
+        width: 100% !important;
+    }
+    
+    .service-card h3 {
+        font-size: 1.2rem !important;
+        width: calc(100% - 60px) !important;
+    }
+    
+    .service-card p {
+        font-size: 0.8rem !important;
+        max-width: 100% !important;
+    }
+    
+    .service-card .service-card-image {
+        width: 36px !important;
+        height: 36px !important;
+        top: 20px !important;
+        right: 20px !important;
     }
     
     .footer-content {
@@ -1408,6 +1434,19 @@ p {
     
     .footer-column {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .service-card {
+        padding: 15px !important;
+        min-height: 180px !important;
+        max-height: 220px !important;
     }
 }
 
