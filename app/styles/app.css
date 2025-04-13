@@ -1,0 +1,96 @@
+/* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0a4d3c 0%, #0f2b44 100%);
+    background-attachment: fixed;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Section styles */
+section {
+    position: relative;
+    padding: 6rem 0;
+    z-index: 1;
+}
+
+/* Remove section divider lines */
+section::before {
+    display: none;
+}
+
+/* Hero section specific adjustments */
+.hero {
+    padding: 8rem 0 6rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle radial gradient for hero section */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    z-index: -1;
+}
+
+/* Content container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Remove any existing section backgrounds */
+.about, .services, .portfolio, .contact {
+    background: none;
+}
+
+/* Ensure content stands out against the gradient */
+h1, h2, h3, p, .text-gradient {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Card styles */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove card gradient overlay */
+.card::before {
+    display: none;
+}
+
+/* Add depth to sections without lines */
+section {
+    position: relative;
+    margin: 2rem 0;
+}
+
+/* Enhance spacing between sections */
+section + section {
+    margin-top: 4rem;
+} 

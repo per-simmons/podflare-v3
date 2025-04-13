@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Thumbnail Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #1a0b2e;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .video-container {
+            display: none;
+        }
+        video {
+            width: 270px;
+            height: 480px;
+            object-fit: cover;
+        }
+        canvas {
+            border: 1px solid #333;
+            margin: 10px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        button {
+            margin: 20px;
+            padding: 10px 20px;
+            background: #d1f602;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Thumbnail Generator</h1>
+    
+    <div class="video-container">
+        <video id="video1" src="public/videos/built-to-sell.mp4"></video>
+        <video id="video2" src="public/videos/exit-five.mp4"></video>
+        <video id="video3" src="public/videos/stu-mclaren.mp4"></video>
+        <video id="video4" src="public/videos/pomp-calum.mp4"></video>
+        <video id="video5" src="public/videos/lori-harder.mp4"></video>
+    </div>
+    
+    <button id="generateBtn">Generate Thumbnails</button>
+    
+    <div id="thumbnails">
+        <canvas id="canvas1" width="270" height="480"></canvas>
+        <canvas id="canvas2" width="270" height="480"></canvas>
+        <canvas id="canvas3" width="270" height="480"></canvas>
+        <canvas id="canvas4" width="270" height="480"></canvas>
+        <canvas id="canvas5" width="270" height="480"></canvas>
+    </div>
+    
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', generateThumbnails);
+        
+        function generateThumbnails() {
+            for (let i = 1; i <= 5; i++) {
+                const video = document.getElementById(`video${i}`);
+                const canvas = document.getElementById(`canvas${i}`);
+                const ctx = canvas.getContext('2d');
+                
+                // Set video to 25% of duration to capture a good frame
+                video.currentTime = video.duration * 0.25;
+                
+                video.addEventListener('seeked', function() {
+                    // Draw the video frame to the canvas
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    
+                    // Add a gradient overlay at the bottom
+                    const gradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
+                    gradient.addColorStop(0, 'rgba(15, 7, 32, 0)');
+                    gradient.addColorStop(1, 'rgba(15, 7, 32, 0.8)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
+                    
+                    // Convert to data URL and download
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = `thumbnail${i}.jpg`;
+                    a.click();
+                }, { once: true });
+            }
+        }
+        
+        // Load videos
+        window.addEventListener('load', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.load();
+            });
+        });
+    </script>
+</body>
+</html> 

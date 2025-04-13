@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 15px;
+            background: #3730a3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Supabase Connection Test</h1>
+        
+        <button id="testConnection">Test Connection</button>
+        <button id="testInsert">Test Insert Record</button>
+        
+        <div class="result">
+            <h3>Results:</h3>
+            <pre id="results">Click a button to test Supabase functionality...</pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+        
+        // Initialize Supabase client
+        const supabaseUrl = 'https://zfupwcphvsewqkssblrj.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0ODQxOTQsImV4cCI6MjA2MDA2MDE5NH0.JxQTBfOnww8L6gRassMuuwFmG0hZlGHx7Wk0K08-rvw'
+        const supabase = createClient(supabaseUrl, supabaseKey)
+        
+        console.log('Supabase client initialized')
+        
+        function logResult(message) {
+            const resultsElement = document.getElementById('results')
+            resultsElement.textContent = message
+            console.log(message)
+        }
+        
+        // Test connection button
+        document.getElementById('testConnection').addEventListener('click', async () => {
+            try {
+                logResult('Testing connection...')
+                
+                // Try to query the table schema
+                const { data, error } = await supabase
+                    .from('PodFlare Leads Submission')
+                    .select('id')
+                    .limit(1)
+                
+                if (error) {
+                    logResult(`Connection Error: ${JSON.stringify(error, null, 2)}`)
+                } else {
+                    logResult(`Connection Successful!\n\nData: ${JSON.stringify(data, null, 2)}`)
+                }
+            } catch (err) {
+                logResult(`Exception: ${err.message}\n\n${err.stack}`)
+            }
+        })
+        
+        // Test insert button
+        document.getElementById('testInsert').addEventListener('click', async () => {
+            try {
+                logResult('Testing insert...')
+                
+                // Create test data
+                const testData = {
+                    name: 'Test User',
+                    email: 'test@example.com',
+                    podcast: 'Test Podcast',
+                    episodes: 4,
+                    budget: '$3,000 – $4,000',
+                    referral: 'Test',
+                    message: 'This is a test submission',
+                    created_at: new Date().toISOString()
+                }
+                
+                // Try to insert a test record
+                const { data, error } = await supabase
+                    .from('PodFlare Leads Submission')
+                    .insert([testData])
+                    .select()
+                
+                if (error) {
+                    logResult(`Insert Error: ${JSON.stringify(error, null, 2)}`)
+                } else {
+                    logResult(`Insert Successful!\n\nData: ${JSON.stringify(data, null, 2)}`)
+                }
+            } catch (err) {
+                logResult(`Exception: ${err.message}\n\n${err.stack}`)
+            }
+        })
+    </script>
+</body>
+</html> 
