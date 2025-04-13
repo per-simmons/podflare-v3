@@ -4,7 +4,7 @@
   "description": "PodFlare Website",
   "scripts": {
     "start": "live-server --port=3000 --open=index.html",
-    "build": "mkdir -p dist && cp -r app/* dist/ && cp -r video-portfolio-updated dist/ && cp -r video-thumbnails-updated dist/ && cp index.html dist/"
+    "build": "mkdir -p dist && cp -r app dist/ && cp -r video-portfolio-updated dist/ && cp -r video-thumbnails-updated dist/ && cp index.html dist/"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
