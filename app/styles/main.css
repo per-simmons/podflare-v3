@@ -3121,6 +3121,17 @@ body::after {
     
     .hero {
         padding-top: 120px;
-        padding-bottom: 80px;
+        padding-bottom: 40px; /* Reduced from 80px to 40px */
+    }
+    
+    /* Reduce spacing between sections */
+    section {
+        padding: 3rem 0; /* Reduced from 6rem to 3rem */
+    }
+    
+    /* Specifically adjust the video section spacing */
+    .video-section {
+        padding-top: 40px; /* Reduced from 100px */
+        min-height: auto; /* Remove min-height constraint */
     }
 }
