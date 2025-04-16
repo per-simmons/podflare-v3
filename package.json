@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "PodFlare Website",
   "scripts": {
-    "start": "live-server --port=3000 --open=index.html"
+    "start": "node server.js",
+    "build": "mkdir -p dist && cp -r app/* dist/ && cp -r video-portfolio-updated dist/ && cp -r video-thumbnails-updated dist/ && cp index.html dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
