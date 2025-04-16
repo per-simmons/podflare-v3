@@ -3,6 +3,12 @@
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build" }
   ],
+  "rewrites": [
+    {
+      "source": "/youtube-thumbnail-downloader",
+      "destination": "https://youtube-thumbnail-downloader-kappa.vercel.app"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
