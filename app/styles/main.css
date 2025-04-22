@@ -1509,11 +1509,21 @@ p {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .pill-badge:hover {
     box-shadow: 0 0 15px rgba(209, 246, 2, 0.3);
     transform: translateY(-2px);
+}
+
+/* Mobile optimization for pill badge */
+@media (max-width: 480px) {
+    .pill-badge {
+        font-size: 0.7rem;
+        padding: 6px 16px;
+        letter-spacing: 0.5px;
+    }
 }
 
 /* Video progress bar */
