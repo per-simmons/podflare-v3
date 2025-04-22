@@ -7,12 +7,10 @@
     {
       "source": "/youtube-thumbnail-downloader",
       "destination": "https://youtube-thumbnail-downloader-kappa.vercel.app"
-    }
-  ],
-  "routes": [
-    { 
-      "src": "/(.*)",
-      "dest": "/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ],
   "headers": [
