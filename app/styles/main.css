@@ -92,8 +92,9 @@ body {
     font-family: 'Gordita', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 400;
     background: linear-gradient(180deg,
-        var(--dark-purple) 0%,
-        var(--dark-purple) 20%,
+        #16003d 0%,       /* Deep purple start */
+        #0a1930 15%,      /* Transition to dark purple */
+        var(--dark-purple) 25%,
         var(--emerald) 40%,
         var(--emerald) 60%,
         var(--navy-blue) 80%,
@@ -197,79 +198,82 @@ p {
     width: 80px;
     height: 4px;
     background: var(--accent);
-    margin: 20px auto 0;
-    border-radius: 2px;
+    margin: 30px auto 0;
+    border-radius: 10px;
 }
 
-/* Button Styles */
+/* Button styles */
 .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #d1f602;
-    color: #000;
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--dark-purple);
+    padding: 15px 30px;
     font-weight: 600;
-    font-size: 1.1rem;
-    padding: 18px 44px;
-    border-radius: 50px;
-    text-align: center;
+    border-radius: 30px;
     transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
     position: relative;
-    box-shadow: 0 4px 15px rgba(209, 246, 2, 0.3);
+    overflow: hidden;
+    z-index: 1;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn-primary::after {
-    content: '→';
-    font-size: 1.2rem;
-    margin-left: 12px;
-    transition: transform 0.3s ease;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: -1;
+    transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(209, 246, 2, 0.5);
+    box-shadow: 0 7px 14px rgba(209, 246, 2, 0.3);
 }
 
 .btn-primary:hover::after {
-    transform: translateX(5px);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .btn-explore {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 500;
-    color: var(--accent);
-    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    padding: 20px 25px;
+    border-radius: 50%;
+    background-color: #d1f602;
 }
 
 .btn-explore span {
-    margin-left: 8px;
-    transition: transform 0.3s ease;
+    color: var(--dark-purple);
+    font-size: 24px;
+    transition: all 0.3s ease;
 }
 
 .btn-explore:hover span {
-    transform: translateX(5px);
+    transform: scale(1.1);
 }
 
 .btn-nav {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 8px 20px;
-    border-radius: 30px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: rgba(209, 246, 2, 0.1);
     color: var(--white);
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(209, 246, 2, 0.3);
 }
 
 .btn-nav:hover {
-    background: #d1f602;
-    color: #000 !important; /* Force black text on hover */
+    background-color: rgba(209, 246, 2, 0.2);
     transform: translateY(-2px);
-    border-color: #d1f602;
-    text-shadow: none; /* Remove any text shadow */
-    font-weight: 600; /* Make text slightly bolder for better contrast */
+    box-shadow: 0 5px 15px rgba(209, 246, 2, 0.15);
 }
 
 /* Navbar Styles */
@@ -279,35 +283,34 @@ p {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 32px 0;
-    transition: all 0.15s ease;
-    background: transparent;
-    border: none;
+    padding: 20px 0;
+    transition: all 0.3s ease;
+    background-color: transparent !important; /* Always transparent */
+    backdrop-filter: none !important; /* No blur */
+    -webkit-backdrop-filter: none !important; /* No blur for Safari */
+    box-shadow: none !important; /* No shadow */
 }
 
 .navbar.scrolled {
-    transform: translateY(-100%);
+    background-color: transparent !important; /* Still transparent when scrolled */
     opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-/* Remove any potential border lines */
 .navbar::after,
 .navbar::before {
     display: none !important;
 }
 
-/* Ensure no borders on nav elements */
 .nav-links,
 .nav-links a,
-.navbar .container {
-    border: none !important;
+.navbar {
+    z-index: 20;
 }
 
-/* Remove any dividers */
 .nav-links::after,
 .nav-links::before,
-.navbar .container::after,
-.navbar .container::before {
+.navbar::after {
     display: none !important;
 }
 
@@ -318,9 +321,9 @@ p {
 }
 
 .navbar .logo {
-    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
     font-weight: 700;
-    letter-spacing: -0.5px;
 }
 
 .logo-pod {
@@ -328,57 +331,64 @@ p {
 }
 
 .logo-flare {
-    color: var(--accent);
+    color: var(--color-primary);
 }
 
 .nav-links {
     display: flex;
-    gap: 36px;
     align-items: center;
+    gap: 30px;
 }
 
 .nav-links a {
     font-weight: 500;
     position: relative;
-    font-size: 1.5rem;
-    opacity: 0.85;
+    padding: 5px 0;
     transition: all 0.3s ease;
+    font-family: 'Gordita', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .nav-links a:hover {
-    opacity: 1;
-    color: var(--accent);
+    color: var(--color-primary);
+    transform: translateY(-2px);
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: 0;
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent);
-    transition: width 0.3s ease;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease;
+    border-radius: 10px;
 }
 
 .nav-links a:hover::after {
     width: 100%;
 }
 
+/* Hamburger menu toggle styling */
 .menu-toggle {
-    display: none;
+    display: none; /* Hidden by default on desktop */
     flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
     cursor: pointer;
+    z-index: 1001;
+    position: relative;
 }
 
 .menu-toggle span {
     display: block;
-    width: 25px;
-    height: 2px;
-    background: var(--white);
-    border-radius: 2px;
-    transition: all 0.3s ease;
+    width: 100%;
+    height: 3px;
+    background-color: white !important;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Hero Section */
@@ -1331,37 +1341,132 @@ p {
     margin: 0;
 }
 
-/* Mobile Menu Styles */
+/* Mobile Menu Custom Styles */
 @media (max-width: 768px) {
+    /* Adjust the navbar for mobile */
+    .navbar {
+        padding: 15px 0;
+    }
+    
+    .navbar .logo img {
+        height: 60px;
+    }
+    
+    /* Improved mobile menu styling */
     .nav-links {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 70%;
-        max-width: 300px;
+        width: 80%;
+        max-width: 350px;
         height: 100vh;
-        background: var(--bg-primary);
+        background-color: #4169e1 !important; /* Royal blue - very bright */
+        padding: 120px 40px 40px !important;
+        z-index: 1000 !important;
+        transition: right 0.3s ease;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        transition: right 0.3s ease;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-        z-index: 1001;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+        overflow-y: auto;
+        opacity: 1 !important; /* Force full opacity */
+        filter: none !important; /* Remove any filters */
+    }
+    
+    .nav-links:before, 
+    .nav-links:after {
+        display: none !important; /* Remove any pseudo-elements that might be adding darkness */
     }
     
     .nav-links.active {
         right: 0;
+        background-color: #4169e1 !important; /* Match the background color */
     }
     
+    /* Make nav links more visible */
+    .nav-links a {
+        color: white !important;
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        padding: 15px 0 !important;
+        width: 100% !important;
+        text-align: left !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+        margin: 0 !important;
+        transition: color 0.2s ease !important;
+        display: block !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    /* Animated nav links for better UX */
+    .nav-link-animate {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .nav-links a:last-child {
+        border-radius: 8px !important;
+        background: var(--color-primary) !important;
+        color: #000 !important;
+        padding: 15px 20px !important;
+        margin-top: 20px !important;
+        text-align: center !important;
+        font-weight: 700 !important;
+    }
+    
+    .nav-links a:hover {
+        color: var(--color-primary) !important;
+        background: none !important;
+        transform: none !important;
+    }
+    
+    
+    .nav-links a:last-child:hover {
+        background-color: rgba(209, 246, 2, 0.4);
+    }
+    
+    .nav-links a::after {
+        display: none; /* Remove underline effect on mobile */
+    }
+    
+    /* Close button (X) in the top right of the menu */
     .menu-toggle {
-        display: flex;
-        z-index: 1002;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 22px;
+        cursor: pointer;
+        z-index: 1001 !important;
+        position: relative;
+        background: none;
+        border: none;
+        margin-right: 15px;
+    }
+    
+    .menu-toggle span {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 3px;
+        margin: 0;
+        background-color: white !important;
+        border-radius: 3px;
+        z-index: inherit;
+        transform-origin: center;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
     
     .menu-toggle.active span:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
+        transform: translateY(9px) rotate(45deg);
     }
     
     .menu-toggle.active span:nth-child(2) {
@@ -1369,7 +1474,28 @@ p {
     }
     
     .menu-toggle.active span:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-9px) rotate(-45deg);
+    }
+    
+    /* Add overlay for menu background */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5) !important; /* Lighter overlay background */
+        z-index: 97;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    .menu-overlay.active {
+        display: block;
+        opacity: 1;
     }
 }
 
@@ -3251,3 +3377,114 @@ body::after {
     }
 }
 /* ... existing code ... */
+
+/* Critical Mobile Navigation Fix - Force visibility */
+@media (max-width: 768px) {
+    /* Make the navbar always transparent in mobile */
+    .navbar {
+        background-color: transparent !important; 
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+    }
+    
+    .navbar.scrolled {
+        background-color: transparent !important;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Rest of the existing code... */
+    .nav-links {
+        background-color: var(--dark-purple) !important; /* Restore original color */
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        box-shadow: none !important;
+        z-index: 1001 !important; /* Higher than menu overlay */
+    }
+    
+    .nav-links.active {
+        background-color: var(--dark-purple) !important;
+    }
+    
+    .nav-links a {
+        color: white !important;
+        opacity: 1 !important;
+    }
+    
+    .nav-links:before, 
+    .nav-links:after {
+        display: none !important;
+    }
+    
+    /* Remove the overlay completely */
+    .menu-overlay {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        background: none !important;
+        z-index: -1 !important;
+    }
+}
+
+/* Desktop-specific fixes - hide hamburger and restore CTA */
+@media (min-width: 769px) {
+    /* Center the navigation links */
+    .navbar .container {
+        justify-content: center !important;
+        gap: 40px !important;
+    }
+    
+    .navbar .logo {
+        margin-right: auto !important;
+    }
+    
+    .nav-links {
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+    
+    /* Hide hamburger menu on desktop */
+    .menu-toggle {
+        display: none !important;
+    }
+    
+    /* Make Let's Chat match other nav items exactly */
+    .nav-links a:last-child {
+        display: inline-block !important;
+        padding: 5px 0 !important;
+        background-color: transparent !important;
+        color: var(--white) !important;
+        border-radius: 0 !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+    }
+    
+    .nav-links a:last-child:hover {
+        background-color: transparent !important;
+        color: var(--color-primary) !important; /* Neon green on hover */
+        transform: translateY(-2px) !important;
+        box-shadow: none !important;
+    }
+    
+    /* Make sure it gets the same underline as other nav items */
+    .nav-links a:last-child::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 0 !important;
+        height: 2px !important;
+        background-color: var(--color-primary) !important;
+        transition: all 0.3s ease !important;
+        border-radius: 10px !important;
+    }
+    
+    .nav-links a:last-child:hover::after {
+        width: 100% !important;
+    }
+}

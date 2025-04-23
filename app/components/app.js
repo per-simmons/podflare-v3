@@ -74,17 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (debugMode) {
         document.body.classList.add('video-debug');
     }
-    
-    // Mobile nav toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-    }
 
     // Modern FAQ functionality
     const faqCards = document.querySelectorAll('.faq-card');
@@ -116,7 +105,24 @@ function initNavbar() {
     const navLinks = document.querySelector('.nav-links');
     const navLinksItems = document.querySelectorAll('.nav-links a');
     
-    if (!navbar) return;
+    if (!navbar || !menuToggle || !navLinks) {
+        console.error('Navbar elements not found:', { navbar, menuToggle, navLinks });
+        return;
+    }
+    
+    console.log('Initializing navbar with elements:', { 
+        navbar: navbar, 
+        menuToggle: menuToggle, 
+        navLinks: navLinks,
+        navLinksCount: navLinksItems.length
+    });
+    
+    // Remove overlay completely
+    let menuOverlay = document.querySelector('.menu-overlay');
+    if (menuOverlay) {
+        menuOverlay.remove(); // Remove it entirely
+        console.log('Removed menu overlay for better visibility');
+    }
     
     // Navbar scroll behavior
     let lastScrollTop = 0;
@@ -133,21 +139,82 @@ function initNavbar() {
         lastScrollTop = scrollTop;
     });
     
-    // Mobile menu toggle
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
+    // Remove any existing event listeners by cloning and replacing
+    const newMenuToggle = menuToggle.cloneNode(true);
+    menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
+    console.log('Replaced menu toggle to avoid duplicate event listeners');
+    
+    // Add animation classes to nav links for staggered appearance
+    navLinksItems.forEach((link, index) => {
+        link.classList.add('nav-link-animate');
+        link.style.transitionDelay = `${index * 0.05}s`;
+    });
+    
+    // Mobile menu toggle - SIMPLIFIED VERSION
+    newMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('Menu toggle clicked');
+        
+        // Toggle classes
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        
+        // Add animation to nav links
+        navLinksItems.forEach((link, index) => {
+            if (navLinks.classList.contains('active')) {
+                link.style.opacity = 0;
+                link.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    link.style.opacity = 1;
+                    link.style.transform = 'translateY(0)';
+                }, 100 + (index * 50));
+            }
         });
         
-        // Close mobile menu when a link is clicked
-        navLinksItems.forEach(item => {
-            item.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
+        console.log('Menu toggle state after click:', { 
+            toggleActive: this.classList.contains('active'),
+            navLinksActive: navLinks.classList.contains('active')
         });
-    }
+    });
+    
+    // Enhanced navigation link click handling - fix for mobile navigation
+    navLinksItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            console.log('Navigation link clicked:', item.getAttribute('href'));
+            
+            // If it's a hash link (section anchor)
+            if (item.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                
+                const targetId = item.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    console.log('Scrolling to section:', targetId);
+                    
+                    // Close the mobile menu
+                    newMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    
+                    // Scroll to the section with smooth behavior
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100, // Offset for navbar
+                        behavior: 'smooth'
+                    });
+                    
+                    // Focus on the target element for accessibility
+                    targetElement.setAttribute('tabindex', '-1');
+                    targetElement.focus();
+                } else {
+                    console.error('Target section not found:', targetId);
+                }
+            }
+        });
+    });
+    
+    console.log('Navbar initialization complete');
 }
 
 // Video carousel functionality
