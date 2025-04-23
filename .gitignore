@@ -1,0 +1,13 @@
+# Node dependencies
+node_modules/
+
+# System files
+.DS_Store
+*.log
+.env
+.env.local
+
+# Editor directories
+.idea/
+.vscode/
+.cursor/ 
