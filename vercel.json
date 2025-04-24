@@ -6,7 +6,11 @@
   "rewrites": [
     {
       "source": "/youtube-thumbnail-downloader",
-      "destination": "https://youtube-thumbnail-downloader-kappa.vercel.app"
+      "destination": "/youtube-thumbnail/index.html"
+    },
+    {
+      "source": "/youtube-thumbnail-downloader/(.*)",
+      "destination": "/youtube-thumbnail/$1"
     },
     { 
       "source": "/(.*)",

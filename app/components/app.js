@@ -104,6 +104,7 @@ function initNavbar() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const navLinksItems = document.querySelectorAll('.nav-links a');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
     if (!navbar || !menuToggle || !navLinks) {
         console.error('Navbar elements not found:', { navbar, menuToggle, navLinks });
@@ -114,7 +115,8 @@ function initNavbar() {
         navbar: navbar, 
         menuToggle: menuToggle, 
         navLinks: navLinks,
-        navLinksCount: navLinksItems.length
+        navLinksCount: navLinksItems.length,
+        dropdownsCount: dropdownToggles.length
     });
     
     // Remove overlay completely
@@ -176,6 +178,27 @@ function initNavbar() {
         console.log('Menu toggle state after click:', { 
             toggleActive: this.classList.contains('active'),
             navLinksActive: navLinks.classList.contains('active')
+        });
+    });
+    
+    // Handle dropdowns on mobile
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            // Only intercept on mobile view
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const dropdown = toggle.parentElement;
+                dropdown.classList.toggle('active');
+                
+                // Close other dropdowns
+                dropdownToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        otherToggle.parentElement.classList.remove('active');
+                    }
+                });
+            }
         });
     });
     
