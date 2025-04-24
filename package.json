@@ -4,7 +4,7 @@
   "description": "PodFlare Website",
   "scripts": {
     "dev": "node server.js",
-    "build": "mkdir -p dist && cp -r app dist/ && cp -r video-portfolio-updated dist/ && cp -r video-thumbnails-updated dist/ && cp -r youtube-thumbnail dist/ && cp -r \"image assets\" dist/ && cp index.html dist/ && cp favicon.ico dist/ || true",
+    "build": "mkdir -p dist && cp -r app dist/ && cp -r youtube-thumbnail dist/ && cp -r video-portfolio-updated dist/ || true && cp -r video-thumbnails-updated dist/ || true && cp -r image\\ assets dist/ || true && cp index.html dist/ && cp favicon.ico dist/ || true",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

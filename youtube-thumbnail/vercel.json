@@ -13,7 +13,7 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "app.py"
+            "destination": "/index.html"
         }
     ],
     "headers": [
