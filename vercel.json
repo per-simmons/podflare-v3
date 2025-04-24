@@ -2,9 +2,17 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     { "source": "/youtube-thumbnail", "destination": "/youtube-thumbnail/index.html" },
-    { "source": "/youtube-thumbnail/(.*)", "destination": "/youtube-thumbnail/$1" }
+    { "source": "/youtube-thumbnail/(.*)", "destination": "/youtube-thumbnail/$1" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/youtube-thumbnail/?", "dest": "/youtube-thumbnail/index.html" },
+    { "src": "/(.*)", "status": 404, "dest": "/404.html" }
   ],
   "headers": [
     {
