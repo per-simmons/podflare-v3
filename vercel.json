@@ -1,10 +1,1 @@
-{
-  "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "static",
-  "rewrites": [
-    { "source": "/youtube-thumbnail-downloader", "destination": "/youtube-thumbnail/index.html" },
-    { "source": "/youtube-thumbnail-downloader/(.*)", "destination": "/youtube-thumbnail/$1" }
-  ]
-} 
+{} 
