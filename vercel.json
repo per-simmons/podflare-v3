@@ -3,18 +3,18 @@
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build" }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/youtube-thumbnail-downloader",
-      "destination": "/youtube-thumbnail/index.html"
+      "src": "/youtube-thumbnail-downloader",
+      "dest": "/youtube-thumbnail/index.html" 
     },
     {
-      "source": "/youtube-thumbnail-downloader/(.*)",
-      "destination": "/youtube-thumbnail/$1"
+      "src": "/youtube-thumbnail-downloader/static/(.*)",
+      "dest": "/youtube-thumbnail/static/$1"
     },
-    { 
-      "source": "/(.*)",
-      "destination": "/$1"
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ],
   "headers": [
