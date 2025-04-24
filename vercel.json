@@ -2,6 +2,10 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/youtube-thumbnail", "destination": "/youtube-thumbnail/index.html" },
+    { "source": "/youtube-thumbnail/(.*)", "destination": "/youtube-thumbnail/$1" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
