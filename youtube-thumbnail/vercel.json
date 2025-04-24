@@ -1,21 +1,6 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "app.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "public/**/*",
-            "use": "@vercel/static"
-        }
-    ],
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/index.html"
-        }
-    ],
+    "framework": "static",
     "headers": [
         {
             "source": "/(.*)",
