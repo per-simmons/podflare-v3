@@ -1,7 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/static-build" }
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "app/**/*", "use": "@vercel/static" },
+    { "src": "youtube-thumbnail/**/*", "use": "@vercel/static" }
   ],
   "routes": [
     {
@@ -9,8 +11,11 @@
       "dest": "/youtube-thumbnail/index.html" 
     },
     {
-      "src": "/youtube-thumbnail-downloader/static/(.*)",
-      "dest": "/youtube-thumbnail/static/$1"
+      "src": "/youtube-thumbnail-downloader/(.*)",
+      "dest": "/youtube-thumbnail/$1"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
