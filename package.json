@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "PodFlare Website",
   "scripts": {
-    "start": "node server.js",
-    "build": "mkdir -p dist && cp -r app dist/ && cp -r video-portfolio-updated dist/ && cp -r video-thumbnails-updated dist/ && cp index.html dist/ && cp favicon.ico dist/",
+    "dev": "node server.js",
+    "build": "mkdir -p dist && cp -r app dist/ && cp -r youtube-thumbnail dist/ && cp -r video-portfolio-updated dist/ && cp -r video-thumbnails-updated dist/ && cp -r \"image assets\" dist/ && cp index.html dist/ && cp 404.html dist/ && cp favicon.ico dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
-} 
+}
