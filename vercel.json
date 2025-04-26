@@ -5,8 +5,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/youtube-thumbnail", "destination": "/youtube-thumbnail/index.html" },
-    { "source": "/youtube-thumbnail/(.*)", "destination": "/youtube-thumbnail/$1" },
+    { "source": "/youtube-thumbnail-downloader", "destination": "/youtube-thumbnail-downloader/index.html" },
+    { "source": "/youtube-thumbnail-downloader/(.*)", "destination": "/youtube-thumbnail-downloader/$1" },
     { "source": "/(.*)", "destination": "/$1" }
   ],
   "headers": [
