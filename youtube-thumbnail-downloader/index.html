@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors *">
+    <meta http-equiv="X-Frame-Options" content="ALLOWALL">
+    <title>YouTube Thumbnail Downloader | Podflare Free Tool</title>
+    <meta name="description" content="Download high-quality YouTube thumbnails with custom filenames. Free tool by Podflare.">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon links -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <!-- Add JSZip for bulk downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">
+                <img src="podflare_logo.png" alt="PodFlare Logo">
+            </a>
+            <div class="nav-links">
+                <a href="/#solutions">Solutions</a>
+                <a href="/#services">Services</a>
+                <a href="/#how-it-works">How It Works</a>
+                <a href="/#faq">FAQ</a>
+                
+                <!-- Free Tools Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Free Tools</a>
+                    <div class="dropdown-menu">
+                        <a href="/youtube-thumbnail-downloader" class="dropdown-item active">YouTube Thumbnail Downloader</a>
+                    </div>
+                </div>
+                
+                <a href="/#contact" class="btn-nav">Let's Chat</a>
+            </div>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Main Tool Card -->
+                <div class="card mb-5">
+                    <div class="card-body p-4">
+                        <!-- Header Section -->
+                        <div class="text-center mb-4">
+                            <div class="badge bg-purple-gradient text-white px-4 py-2 mb-3">
+                                <i class="bi bi-youtube text-danger"></i>
+                                YouTube Tools
+                            </div>
+                            <h1 class="fw-bold mb-3">Transform your conversations into clients</h1>
+                            <p class="lead mb-4">We turn your B2B podcast into strategic, AI-assisted content that builds authority, fills your pipeline, and gets you in front of the right buyers.</p>
+                        </div>
+
+                        <ul class="nav nav-tabs mb-4" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="single-tab" data-bs-toggle="tab" data-bs-target="#single" type="button" role="tab">Single URL</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="bulk-tab" data-bs-toggle="tab" data-bs-target="#bulk" type="button" role="tab">Bulk Upload</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- Single Upload Tab -->
+                            <div class="tab-pane fade show active" id="single" role="tabpanel">
+                                <form id="thumbnail-form" class="mb-4">
+                                    <div class="input-group">
+                                        <input type="url" class="form-control" id="youtube-url" 
+                                               placeholder="Paste YouTube URL here" required>
+                                        <button type="submit" class="btn btn-modern">
+                                            <i class="bi bi-search"></i> Get Thumbnail
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+
+                                <div id="result" class="text-center d-none">
+                                    <div class="thumbnail-container mb-3">
+                                        <img id="thumbnail-preview" class="img-fluid" alt="Video thumbnail">
+                                    </div>
+                                    <form id="download-form">
+                                        <input type="hidden" id="thumbnail-url" name="url">
+                                        <button type="submit" class="btn btn-modern-success">
+                                            <i class="bi bi-download"></i> Download Thumbnail
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Bulk Upload Tab -->
+                            <div class="tab-pane fade" id="bulk" role="tabpanel">
+                                <form id="bulk-thumbnail-form" class="mb-4">
+                                    <div class="mb-3">
+                                        <textarea class="form-control" id="bulk-youtube-urls" 
+                                                  rows="5" placeholder="Paste multiple YouTube URLs (one per line)" required></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-modern">
+                                            <i class="bi bi-cloud-download"></i> Download All Thumbnails
+                                        </button>
+                                    </div>
+                                </form>
+                                <div id="bulk-error-message" class="alert alert-danger d-none" role="alert"></div>
+                                <div id="bulk-progress" class="progress d-none mb-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center pb-4">
+                        <small class="text-muted">
+                            <i class="bi bi-shield-check"></i>
+                            No ads, no gimmicks, 100% free
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Waitlist Section -->
+                <div class="card waitlist-card" id="waitlist-section">
+                    <div class="card-body text-center py-5">
+                        <div class="badge bg-purple-gradient text-white px-4 py-2 mb-4">
+                            Join the waitlist
+                        </div>
+                        <h2 class="h2 fw-bold mb-4">Need help with thumbnail design?</h2>
+                        <p class="lead mb-4">By the way...we don't just help you grab thumbnails—we create them for you.</p>
+                        <p class="lead mb-5">PodFlare is a social-first agency that edits and optimizes podcasts into high-impact video content.</p>
+
+                        <a href="/#contact" class="chat-button mb-4">
+                            Let's chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Thumbnail downloader functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const thumbnailForm = document.getElementById('thumbnail-form');
+            const bulkThumbnailForm = document.getElementById('bulk-thumbnail-form');
+            const youtubeUrlInput = document.getElementById('youtube-url');
+            const bulkYoutubeUrlsInput = document.getElementById('bulk-youtube-urls');
+            const errorMessage = document.getElementById('error-message');
+            const bulkErrorMessage = document.getElementById('bulk-error-message');
+            const result = document.getElementById('result');
+            const thumbnailPreview = document.getElementById('thumbnail-preview');
+            const thumbnailUrlInput = document.getElementById('thumbnail-url');
+            const downloadForm = document.getElementById('download-form');
+            const bulkProgress = document.getElementById('bulk-progress');
+            const bulkProgressBar = bulkProgress.querySelector('.progress-bar');
+            
+            // Extract video ID from YouTube URL
+            function extractVideoId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
+            
+            // Get thumbnail URL for a video ID
+            function getThumbnailUrl(videoId) {
+                return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            }
+            
+            // Handle single thumbnail form submission
+            thumbnailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const youtubeUrl = youtubeUrlInput.value.trim();
+                const videoId = extractVideoId(youtubeUrl);
+                
+                if (!videoId) {
+                    errorMessage.textContent = 'Invalid YouTube URL. Please enter a valid YouTube video URL.';
+                    errorMessage.classList.remove('d-none');
+                    result.classList.add('d-none');
+                    return;
+                }
+                
+                errorMessage.classList.add('d-none');
+                const thumbnailUrl = getThumbnailUrl(videoId);
+                
+                // Load and display the thumbnail
+                thumbnailPreview.src = thumbnailUrl;
+                thumbnailUrlInput.value = thumbnailUrl;
+                result.classList.remove('d-none');
+            });
+            
+            // Handle download form submission
+            downloadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const thumbnailUrl = thumbnailUrlInput.value;
+                const videoId = extractVideoId(youtubeUrlInput.value);
+                
+                if (thumbnailUrl) {
+                    // Create a temporary link to download the image
+                    const a = document.createElement('a');
+                    a.href = thumbnailUrl;
+                    a.download = `youtube-thumbnail-${videoId}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            });
+            
+            // Handle bulk thumbnail form submission
+            bulkThumbnailForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const urls = bulkYoutubeUrlsInput.value.trim().split('\n').filter(url => url.trim() !== '');
+                
+                if (urls.length === 0) {
+                    bulkErrorMessage.textContent = 'Please enter at least one YouTube URL.';
+                    bulkErrorMessage.classList.remove('d-none');
+                    return;
+                }
+                
+                bulkErrorMessage.classList.add('d-none');
+                bulkProgress.classList.remove('d-none');
+                
+                // Create a new JSZip instance
+                const zip = new JSZip();
+                let validUrls = 0;
+                
+                // Process each URL
+                for (let i = 0; i < urls.length; i++) {
+                    const url = urls[i].trim();
+                    const videoId = extractVideoId(url);
+                    
+                    if (videoId) {
+                        validUrls++;
+                        const thumbnailUrl = getThumbnailUrl(videoId);
+                        
+                        try {
+                            // Fetch the thumbnail
+                            const response = await fetch(thumbnailUrl);
+                            const blob = await response.blob();
+                            
+                            // Add the thumbnail to the zip file
+                            zip.file(`youtube-thumbnail-${videoId}.jpg`, blob);
+                            
+                            // Update progress
+                            const progress = (validUrls / urls.length) * 100;
+                            bulkProgressBar.style.width = `${progress}%`;
+                            bulkProgressBar.setAttribute('aria-valuenow', progress);
+                        } catch (error) {
+                            console.error('Error fetching thumbnail:', error);
+                        }
+                    }
+                }
+                
+                if (validUrls === 0) {
+                    bulkErrorMessage.textContent = 'No valid YouTube URLs found.';
+                    bulkErrorMessage.classList.remove('d-none');
+                    bulkProgress.classList.add('d-none');
+                    return;
+                }
+                
+                // Generate the zip file
+                zip.generateAsync({ type: 'blob' }).then(function(content) {
+                    // Create a temporary link to download the zip file
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(content);
+                    a.download = 'youtube-thumbnails.zip';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    
+                    // Reset progress
+                    bulkProgress.classList.add('d-none');
+                    bulkProgressBar.style.width = '0%';
+                    bulkProgressBar.setAttribute('aria-valuenow', 0);
+                });
+            });
+            
+            // Navbar handling
+            const navbar = document.querySelector('.navbar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const navLinksItems = document.querySelectorAll('.nav-links a');
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            if (navbar && menuToggle && navLinks) {
+                // Navbar scroll behavior
+                window.addEventListener('scroll', () => {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    
+                    if (scrollTop > 0) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+                
+                // Mobile menu toggle
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Toggle classes
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    
+                    // Add animation to nav links
+                    navLinksItems.forEach((link, index) => {
+                        if (navLinks.classList.contains('active')) {
+                            link.style.opacity = 0;
+                            link.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                link.style.opacity = 1;
+                                link.style.transform = 'translateY(0)';
+                            }, 100 + (index * 50));
+                        }
+                    });
+                });
+                
+                // Handle dropdowns on mobile
+                dropdownToggles.forEach(toggle => {
+                    toggle.addEventListener('click', (e) => {
+                        // Only intercept on mobile view
+                        if (window.innerWidth <= 768) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            const dropdown = toggle.parentElement;
+                            dropdown.classList.toggle('active');
+                            
+                            // Close other dropdowns
+                            dropdownToggles.forEach(otherToggle => {
+                                if (otherToggle !== toggle) {
+                                    otherToggle.parentElement.classList.remove('active');
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
