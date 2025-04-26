@@ -6,8 +6,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/youtube-thumbnail-downloader", "destination": "/youtube-thumbnail-downloader/index.html" },
-    { "source": "/youtube-thumbnail-downloader/(.*)", "destination": "/youtube-thumbnail-downloader/$1" },
-    { "source": "/(.*)", "destination": "/$1" }
+    { "source": "/youtube-thumbnail-downloader/(.*)", "destination": "/youtube-thumbnail-downloader/$1" }
   ],
   "headers": [
     {
