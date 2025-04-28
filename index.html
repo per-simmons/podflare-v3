@@ -760,25 +760,25 @@
                                     document.getElementById('formSuccessMessage').style.display = 'block';
                                     contactForm.reset();
                                     
-                                    // Second fetch to the Edge Function URL
+                                    // Send to Lindy webhook
                                     try {
-                                        console.log('Sending notification to Edge Function...');
-                                        const notifyResponse = await fetch('https://zfupwcphvsewqkssblrj.functions.supabase.co/notify_lindy', {
+                                        console.log('Sending data to Lindy webhook...');
+                                        const lindyResponse = await fetch('https://public.lindy.ai/api/v1/webhooks/lindy/1a96b69d-cec9-47ea-81b3-f194cf273e4f', {
                                             method: 'POST',
                                             headers: {
                                                 'Content-Type': 'application/json',
-                                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0ODQxOTQsImV4cCI6MjA2MDA2MDE5NH0.JxQTBfOnww8L6gRassMuuwFmG0hZlGHx7Wk0K08-rvw'
+                                                'Authorization': 'Bearer hSjEptdcxFMSoWcVgmXtrQSCbGtCFvdL'
                                             },
                                             body: JSON.stringify(payload)
                                         });
                                         
-                                        if (notifyResponse.ok) {
-                                            console.log('Notification sent successfully!');
+                                        if (lindyResponse.ok) {
+                                            console.log('Lindy webhook notification sent successfully!');
                                         } else {
-                                            console.warn('Notification failed, but form was submitted:', await notifyResponse.text());
+                                            console.warn('Lindy webhook notification failed, but form was submitted:', await lindyResponse.text());
                                         }
-                                    } catch (notifyError) {
-                                        console.warn('Error sending notification, but form was submitted:', notifyError);
+                                    } catch (lindyError) {
+                                        console.warn('Error sending to Lindy webhook, but form was submitted:', lindyError);
                                     }
                                 }
                             } catch (err) {
