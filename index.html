@@ -759,6 +759,27 @@
                                     console.log('Form submitted successfully!', result);
                                     document.getElementById('formSuccessMessage').style.display = 'block';
                                     contactForm.reset();
+                                    
+                                    // Second fetch to the Edge Function URL
+                                    try {
+                                        console.log('Sending notification to Edge Function...');
+                                        const notifyResponse = await fetch('https://zfupwcphvsewqkssblrj.functions.supabase.co/notify_lindy', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0ODQxOTQsImV4cCI6MjA2MDA2MDE5NH0.JxQTBfOnww8L6gRassMuuwFmG0hZlGHx7Wk0K08-rvw'
+                                            },
+                                            body: JSON.stringify(payload)
+                                        });
+                                        
+                                        if (notifyResponse.ok) {
+                                            console.log('Notification sent successfully!');
+                                        } else {
+                                            console.warn('Notification failed, but form was submitted:', await notifyResponse.text());
+                                        }
+                                    } catch (notifyError) {
+                                        console.warn('Error sending notification, but form was submitted:', notifyError);
+                                    }
                                 }
                             } catch (err) {
                                 console.error('Exception when submitting form:', err);
