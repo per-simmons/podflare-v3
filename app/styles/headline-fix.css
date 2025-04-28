@@ -84,6 +84,12 @@
     white-space: normal !important;
     margin-left: -0.5rem !important;
     margin-right: -0.5rem !important;
+    margin-top: 0.5rem !important; /* Add space above headline on mobile */
+  }
+  
+  /* Increased spacing between pill badge and headline on mobile */
+  .pill-badge {
+    margin-bottom: 1.5rem !important; /* Increased from 0.7rem */
   }
   
   /* Mobile-specific line styling */
