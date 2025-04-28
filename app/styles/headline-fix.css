@@ -1,0 +1,164 @@
+/* !important overrides to fix headline display issues */
+
+/* Reset any pseudo-elements */
+.headline::before,
+.headline::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Reset any line styles that might be causing issues */
+.headline .line,
+.headline .line:nth-child(1),
+.headline .line:nth-child(2) {
+  display: inline !important;
+}
+
+/* Guarantee the headline itself displays properly */
+.headline {
+  display: block !important;
+  visibility: visible !important;
+  position: relative !important;
+  margin-bottom: 0.8rem !important;
+  font-size: 3.5rem !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+}
+
+/* Reset desktop/mobile headline variants */
+.desktop-headline, 
+.mobile-headline {
+  display: none !important;
+}
+
+/* Desktop break handling */
+.desktop-break {
+  display: inline-block !important;
+}
+
+/* Mobile break handling - hidden by default on desktop */
+.mobile-break {
+  display: none !important;
+}
+
+/* Tighten vertical spacing */
+.pill-badge {
+  margin-bottom: 0.7rem !important;
+}
+
+.underline-decoration {
+  margin-top: 0.6rem !important;
+}
+
+/* For the desktop layout - make it a single line with break */
+.headline .line-1,
+.headline .line-2,
+.headline .highlight {
+  display: inline !important;
+}
+
+/* Desktop layout: "Turn your podcast into" on first line, "a content machine" on second */
+.headline .line-1::after {
+  content: " podcast into" !important;
+}
+
+/* On desktop, show 'a' before the highlight span */
+.headline .highlight::before {
+  content: "a " !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+}
+
+.headline .line-2 {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  /* Mobile headline styling */
+  .headline {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    font-size: 10vw !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+  }
+  
+  /* Mobile-specific line styling */
+  .headline .line-1,
+  .headline .line-2,
+  .headline .highlight {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    letter-spacing: -0.01em !important;
+  }
+  
+  /* Remove the desktop "podcast into" text on mobile */
+  .headline .line-1::after {
+    content: "" !important;
+  }
+  
+  /* Remove the 'a' before highlight on mobile (as we use line-2) */
+  .headline .highlight::before {
+    content: "" !important;
+  }
+  
+  /* Show the second line on mobile */
+  .headline .line-2 {
+    display: block !important;
+  }
+  
+  /* Ensure highlight gets its own line and styling */
+  .headline .highlight {
+    margin-top: 0.1em !important;
+    font-size: 1.08em !important;
+  }
+  
+  /* Switch break visibility for mobile */
+  .desktop-break {
+    display: none !important;
+  }
+  
+  /* Show mobile breaks */
+  .mobile-break {
+    display: block !important;
+    height: 0.2em !important;
+  }
+  
+  /* Keep the first part together - this is crucial */
+  .headline > :not(.mobile-break):not(.highlight):first-child {
+    white-space: nowrap !important;
+    display: inline-block !important;
+  }
+
+  /* Keep "Turn your podcast into" all on one line */
+  .headline::first-line {
+    white-space: nowrap !important;
+  }
+  
+  /* Make sure "a content machine" stays on one line */
+  .headline .highlight,
+  .headline span.highlight {
+    display: inline !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Keep "a" with "content machine" */
+  .headline .mobile-break + a,
+  .headline br.mobile-break + a {
+    white-space: nowrap !important;
+    display: inline !important;
+  }
+}
+
+/* Extra small screens - ensure text doesn't break */
+@media (max-width: 380px) {
+  .headline {
+    font-size: 9vw !important;
+  }
+} 

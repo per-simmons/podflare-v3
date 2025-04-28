@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PodFlare | Podcast Marketing Agency</title>
     <link rel="stylesheet" href="./app/styles/main.css">
+    <link rel="stylesheet" href="./app/styles/mobile-breaks.css">
+    <link rel="stylesheet" href="./app/styles/headline-fix.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Favicon links -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <script src="./app/components/app.js" defer></script>
+    <script src="./app/js/debug.js" defer></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6LfcLBYrAAAAANOIp-RkFXbrAh6VrXZODQ3CuI4m"></script>
     <style>
         /* Fix for Guest Research & Outreach card */
@@ -60,11 +63,12 @@
         <div class="container">
             <div class="pill-badge">B2B podcast marketing agency</div>
             <h1 class="headline">
-                <span class="line">Transform your <span class="highlight">conversations</span></span>
-                <span class="line">into <span class="highlight">clients</span></span>
+                <span class="line-1">Turn your</span>
+                <span class="line-2">podcast into a</span>
+                <span class="highlight">content machine</span>
             </h1>
             <div class="underline-decoration"></div>
-            <p class="subheadline">We turn your B2B podcast into strategic, AI-assisted content that builds authority, fills your pipeline, and gets you in front of the right buyers.</p>
+            <p class="subheadline">We transform your B2B podcast into strategic content that builds authority, fills your pipeline, and gets you in front of the right buyers.</p>
             <a href="#contact" class="btn-primary">Let's Chat</a>
         </div>
     </section>
@@ -690,7 +694,7 @@
                         
                         // First, get the reCAPTCHA token
                         grecaptcha.ready(function() {
-                            // Try to get a reCAPTCHA token, but continue even if it fails
+                            // Try to get a reCAPTCHA token, but continue if it fails
                             grecaptcha.execute('6LfcLBYrAAAAANOIp-RkFXbrAh6VrXZODQ3CuI4m', {action: 'submit_form'})
                             .then(async function(token) {
                                 await processFormSubmission(token);
@@ -769,6 +773,17 @@
             } else {
                 console.error('Contact form not found');
             }
+        });
+    </script>
+
+    <!-- Check for duplicate headlines -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headlines = document.querySelectorAll('.headline');
+            console.log('Found ' + headlines.length + ' headline elements:');
+            headlines.forEach((h, i) => {
+                console.log(i + ': ' + h.outerHTML);
+            });
         });
     </script>
 </body>
