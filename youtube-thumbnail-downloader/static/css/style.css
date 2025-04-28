@@ -666,25 +666,100 @@ h1, h2, h3, .display-4 {
     .dropdown.active .dropdown-menu {
         display: block;
     }
+    
+    /* YouTube Thumbnail Downloader Mobile Styles */
+    .tool-container {
+        padding: 150px 15px 30px !important;
+    }
+    
+    /* Make sure the card has proper padding on mobile */
+    .card {
+        padding: 1.5rem;
+    }
+    
+    /* Force tabs to display horizontally */
+    .nav-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .nav-tabs .nav-item {
+        flex: 1;
+    }
+    
+    /* Adjust input group for mobile */
+    .input-group {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .input-group .form-control {
+        flex: 1;
+        height: 48px;
+    }
+    
+    .input-group .btn {
+        position: relative;
+        right: auto;
+        top: auto;
+        height: 38px;
+        margin-left: 8px;
+        padding: 0 1rem;
+        min-width: 120px;
+    }
 }
 
 @media (max-width: 576px) {
+    /* YouTube Thumbnail Downloader Mobile Styles - Extra Small Devices */
     .input-group {
-        gap: 0.5rem;
+        flex-direction: row !important;
+        gap: 8px;
+        margin-bottom: 1rem;
     }
 
     .input-group > * {
-        width: 100%;
+        width: auto;
         margin: 0;
     }
-
+    
+    .input-group .form-control {
+        flex: 1;
+    }
+    
+    .input-group .btn {
+        min-width: auto;
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 0.9rem;
+    }
+    
     .nav-tabs {
-        flex-wrap: wrap;
+        flex-wrap: nowrap !important;
     }
 
     .nav-tabs .nav-link {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+    
+    /* Adjust spacing for mobile layouts */
+    .card-body {
+        padding: 1rem !important;
+    }
+    
+    .tab-content {
+        margin-top: 1rem;
+    }
+    
+    /* Fix bulk upload textarea size */
+    #bulk-youtube-urls {
+        height: 100px;
     }
 }
 
