@@ -1569,6 +1569,16 @@ p {
         min-height: 180px !important;
         max-height: 220px !important;
     }
+
+    /* Add more bottom padding to service cards on mobile */
+    .service-card {
+        padding-bottom: 25px !important;
+    }
+    
+    /* First card (Long-Form Video Editing) gets extra bottom padding */
+    .service-card:nth-child(1) {
+        padding-bottom: 30px !important;
+    }
 }
 
 /* Animation Classes */
@@ -3625,4 +3635,217 @@ body::after {
     .dropdown-item:last-child {
         border-bottom: none;
     }
+}
+
+.mobile-break { display: none; }
+@media (max-width: 768px) {
+  .mobile-break { display: inline; }
+}
+
+@media (max-width: 768px) {
+  .headline .line:nth-child(1),
+  .headline .line:nth-child(2) {
+    display: inline-block;
+  }
+  .headline .line:nth-child(2)::before {
+    content: none;
+  }
+}
+
+/* Mobile-only line break */
+.mobile-only-br {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-br {
+    display: block;
+  }
+}
+
+/* Replace with new mobile headline styling */
+@media (max-width: 768px) {
+  /* Reset previous mobile styles */
+  .headline .line:nth-child(1) {
+    display: block;
+  }
+  .headline .line:nth-child(2)::before {
+    content: none;
+  }
+  
+  /* New mobile styling */
+  .headline .line:nth-child(1) {
+    display: block;
+    content: "Turn your";
+    margin-bottom: 0.5rem;
+  }
+  .headline .line:nth-child(1)::after {
+    content: "podcast into";
+    display: block;
+    margin: 0.5rem 0;
+  }
+  .headline .line:nth-child(2) {
+    display: block;
+  }
+}
+
+/* Desktop and Mobile Headline Styling */
+.mobile-line {
+  display: none !important;
+}
+
+.desktop-line {
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-line {
+    display: block !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .desktop-line {
+    display: none !important;
+  }
+}
+
+/* Cleanup all the previous mobile headline classes */
+.mobile-break, 
+.mobile-line,
+.desktop-line,
+.mobile-only-br { 
+  display: none; 
+}
+
+/* Simple desktop/mobile visibility classes */
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Desktop and mobile headline styling */
+.headline-desktop {
+  display: block;
+}
+
+/* MOBILE: This is the only part that should change on mobile */
+@media (max-width: 768px) {
+  /* Create three lines for mobile by removing the original two lines */
+  .headline .line.headline-desktop {
+    display: none;
+  }
+  
+  /* Add the three lines using pseudo-elements */
+  .headline::before {
+    content: "Turn your";
+    display: block;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+  }
+  
+  .headline::after {
+    content: "podcast into";
+    display: block;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+  }
+  
+  /* Add the final line with content machine */
+  .headline::after {
+    content: "podcast into\a a content machine";
+    white-space: pre;
+    color: #ffffff;
+  }
+  
+  /* Style the "content machine" part */
+  .headline::after span.highlight {
+    color: #d1f602;
+  }
+}
+
+/* Mobile headline styling */
+@media (max-width: 768px) {
+  .headline .line.headline-desktop:first-child {
+    content: "Turn your";
+    white-space: normal;
+    display: block;
+  }
+  
+  .headline .line.headline-desktop:first-child::after {
+    content: '';
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .headline .line.headline-desktop:first-child::before {
+    content: none;
+  }
+  
+  /* Hide "podcast into" from first line */
+  .headline .line.headline-desktop:first-child {
+    visibility: hidden;
+    position: relative;
+    height: 4rem;
+  }
+  
+  /* Add "Turn your" text */
+  .headline .line.headline-desktop:first-child::after {
+    content: "Turn your";
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+/* Clean headline display controls */
+.mobile-headline {
+  display: none;
+}
+
+.desktop-headline {
+  display: block;
+}
+
+/* Mobile-only controls */
+@media (max-width: 768px) {
+  .mobile-headline {
+    display: block;
+  }
+  
+  .desktop-headline {
+    display: none;
+  }
+}
+
+/* Simple solution for headline line breaks */
+.break {
+  display: none;
+}
+
+/* Show line breaks only on mobile */
+@media (max-width: 768px) {
+  .mobile-break {
+    display: block;
+    height: 0.7em;
+  }
 }
