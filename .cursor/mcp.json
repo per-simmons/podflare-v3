@@ -1,4 +1,4 @@
-{
+[BLANK_AUDIO] {
     "mcpServers": {
       "supabase": {
         "command": "npx",

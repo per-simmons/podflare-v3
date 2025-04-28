@@ -3847,5 +3847,5 @@ body::after {
   .mobile-break {
     display: block;
     height: 0.7em;
-  }
+    }
 }

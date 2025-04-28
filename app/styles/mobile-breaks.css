@@ -1,0 +1,11 @@
+/* Default desktop: hide the forced breaks */
+.mobile-break {
+  display: none;
+}
+
+/* Mobile breakpoint: show the forced breaks */
+@media (max-width: 768px) {
+  .mobile-break {
+    display: inline;
+  }
+} 

@@ -1,27 +1,34 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const port = 3000;
 
-// Main route for the youtube-thumbnail-downloader page
-app.get('/youtube-thumbnail-downloader', (req, res) => {
-  res.sendFile(path.join(__dirname, '/youtube-thumbnail/index.html'));
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname)));
+
+// Special routes for CSS and JS files 
+app.get('/app/styles/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app', 'styles', req.params.file));
 });
 
-// Serve the static files from youtube-thumbnail directory
-app.use('/youtube-thumbnail-downloader/static', express.static(path.join(__dirname, 'youtube-thumbnail/static')));
-
-// Also serve static files at the root /static path for compatibility
-app.use('/static', express.static(path.join(__dirname, 'youtube-thumbnail/static')));
-
-// Serve all other static files from root
-app.use(express.static('./'));
-
-// Catch all other paths within youtube-thumbnail-downloader and redirect to the proper youtube-thumbnail folder
-app.get('/youtube-thumbnail-downloader/*', (req, res) => {
-  const requestPath = req.path.replace('/youtube-thumbnail-downloader/', '');
-  res.sendFile(path.join(__dirname, 'youtube-thumbnail', requestPath));
+app.get('/app/assets/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app', 'assets', req.params.file));
 });
 
-app.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+app.get('/app/js/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app', 'js', req.params.file));
+});
+
+app.get('/app/components/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app', 'components', req.params.file));
+});
+
+// Route for image assets
+app.get('/image assets/:file', (req, res) => {
+  res.sendFile(path.join(__dirname, 'image assets', req.params.file));
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 }); 

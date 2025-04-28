@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors *">
     <meta http-equiv="X-Frame-Options" content="ALLOWALL">
-    <title>YouTube Thumbnail Downloader | Podflare Free Tool</title>
-    <meta name="description" content="Download high-quality YouTube thumbnails with custom filenames. Free tool by Podflare.">
+    <title>YouTube Thumbnail Downloader | Powered by Podflare</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,40 +14,38 @@
     <link rel="stylesheet" href="static/css/style.css">
     <!-- Add JSZip for bulk downloads -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- Add Font Awesome for icons used in the navbar -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Inline styles to force star backgrounds to be visible -->
+    <style>
+        /* Force star overlay to be visible */
+        body {
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .star-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .container, .card, .btn {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navbar (Exact copy from main site) -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="/" class="logo">
-                <img src="static/images/podflare_logo.png" alt="PodFlare Logo" height="80">
-            </a>
-            <div class="nav-links">
-                <a href="/#solutions">Solutions</a>
-                <a href="/#services">Services</a>
-                <a href="/#how-it-works">How It Works</a>
-                <a href="/#faq">FAQ</a>
-                
-                <!-- Free Tools Dropdown -->
-                <div class="dropdown">
-                    <a href="#" class="dropdown-toggle">Free Tools</a>
-                    <div class="dropdown-menu">
-                        <a href="/youtube-thumbnail" class="dropdown-item active">YouTube Thumbnail Downloader</a>
-                    </div>
-                </div>
-                
-                <a href="/#contact" class="btn-nav">Let's Chat</a>
-            </div>
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
+    <!-- Star background container -->
+    <div class="star-bg">
+        <div class="star-overlay"></div>
+    </div>
+    
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -61,7 +58,7 @@
                                 <i class="bi bi-youtube text-danger"></i>
                                 YouTube Tools
                             </div>
-                            <h1 class="fw-bold mb-3">YouTube Thumbnail Downloader</h1>
+                            <h1 class="h2 fw-bold mb-3">YouTube Thumbnail Downloader</h1>
                             <p class="lead mb-4">Download high-quality thumbnails from YouTube videos</p>
                         </div>
 
@@ -124,7 +121,7 @@
                     </div>
                     <div class="text-center pb-4">
                         <small class="text-muted">
-                            <i class="bi bi-shield-check"></i>
+                            <i class="bi bi-shield-fill-check"></i>
                             No ads, no gimmicks, 100% free
                         </small>
                     </div>
@@ -151,75 +148,40 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="static/js/script.js"></script>
-    <!-- Add the navbar initialization script -->
+    
+    <!-- Twinkling stars script -->
     <script>
-    // Navbar handling (copied from main site)
-    document.addEventListener('DOMContentLoaded', function() {
-        const navbar = document.querySelector('.navbar');
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        const navLinksItems = document.querySelectorAll('.nav-links a');
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        
-        if (!navbar || !menuToggle || !navLinks) {
-            console.error('Navbar elements not found');
-            return;
+        // Create twinkling stars
+        function createTwinklingStars() {
+            const starsContainer = document.querySelector('.star-bg');
+            const numberOfStars = 300; // Increased number of stars
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('twinkle-star');
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random size (slightly larger)
+                const size = 2 + Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random animation delay
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Random animation duration for more natural twinkling
+                star.style.animationDuration = `${2 + Math.random() * 4}s`;
+                
+                // Add to the page
+                starsContainer.appendChild(star);
+            }
         }
         
-        // Navbar scroll behavior
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > 0) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-        
-        // Mobile menu toggle
-        menuToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Toggle classes
-            this.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            
-            // Add animation to nav links
-            navLinksItems.forEach((link, index) => {
-                if (navLinks.classList.contains('active')) {
-                    link.style.opacity = 0;
-                    link.style.transform = 'translateY(20px)';
-                    setTimeout(() => {
-                        link.style.opacity = 1;
-                        link.style.transform = 'translateY(0)';
-                    }, 100 + (index * 50));
-                }
-            });
-        });
-        
-        // Handle dropdowns on mobile
-        dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                // Only intercept on mobile view
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const dropdown = toggle.parentElement;
-                    dropdown.classList.toggle('active');
-                    
-                    // Close other dropdowns
-                    dropdownToggles.forEach(otherToggle => {
-                        if (otherToggle !== toggle) {
-                            otherToggle.parentElement.classList.remove('active');
-                        }
-                    });
-                }
-            });
-        });
-    });
+        // Initialize stars when the page is loaded
+        document.addEventListener('DOMContentLoaded', createTwinklingStars);
     </script>
 </body>
 </html> 
