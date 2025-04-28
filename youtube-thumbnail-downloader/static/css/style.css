@@ -346,6 +346,7 @@ h1, h2, h3, .display-4 {
     pointer-events: none;
 }
 
+/* Nav tabs styling */
 .nav-tabs {
     border: none;
     background: rgba(8, 9, 34, 0.5);
@@ -356,6 +357,7 @@ h1, h2, h3, .display-4 {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
 }
 
 .nav-tabs .nav-link {

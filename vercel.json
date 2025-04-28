@@ -2,7 +2,7 @@
   "version": 2,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/youtube-thumbnail-downloader", "destination": "/youtube-thumbnail-downloader/index.html" },
+    { "source": "/youtube-thumbnail-downloader/", "destination": "/youtube-thumbnail-downloader/index.html" },
     { "source": "/youtube-thumbnail-downloader/(.*)", "destination": "/youtube-thumbnail-downloader/$1" }
   ],
   "headers": [
