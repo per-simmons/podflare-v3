@@ -1,14 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
-    { "src": "/youtube-thumbnail-downloader", "dest": "/youtube-thumbnail-downloader/index.html" },
-    { "src": "/youtube-thumbnail-downloader/(.*)", "dest": "/youtube-thumbnail-downloader/$1" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/$1" }
+  "rewrites": [
+    { "source": "/youtube-thumbnail-downloader", "destination": "/youtube-thumbnail-downloader/index.html" },
+    { "source": "/youtube-thumbnail-downloader/(.*)", "destination": "/youtube-thumbnail-downloader/$1" }
   ],
   "headers": [
     {
