@@ -8,7 +8,6 @@ from io import BytesIO
 import re
 from zipfile import ZipFile, ZIP_DEFLATED
 from flask_cors import CORS
-from utils.google_sheets import append_to_sheet
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -155,10 +154,20 @@ def bulk_download():
                 if not thumbnail_url:
                     continue
 
+                # Get video info for proper filename
+                video_info = get_video_info(video_id)
+                if not video_info:
+                    video_info = {'title': f'Video_{i+1}', 'channel': 'YouTube'}
+
                 try:
                     response = requests.get(thumbnail_url)
                     response.raise_for_status()
-                    filename = f'thumbnail_{i+1}.jpg'
+                    
+                    # Clean filename by removing invalid characters
+                    clean_title = re.sub(r'[<>:"/\\|?*]', '', video_info['title'])
+                    clean_channel = re.sub(r'[<>:"/\\|?*]', '', video_info['channel'])
+                    filename = f'{clean_channel} - {clean_title}.jpg'
+                    
                     zf.writestr(filename, response.content)
                 except Exception as e:
                     logging.error(f"Error downloading thumbnail for {url}: {e}")
@@ -210,12 +219,11 @@ def join_waitlist():
     if not email:
         return jsonify({'error': 'Email is required'}), 400
 
+    # Simple mockup response since we're ignoring Google Sheets integration
     try:
-        success = append_to_sheet(email)
-        if success:
-            return jsonify({'message': 'Successfully joined waitlist'}), 200
-        else:
-            return jsonify({'error': 'Error saving to waitlist'}), 500
+        # Just log the email instead of saving it
+        logging.info(f"Would have added to waitlist: {email}")
+        return jsonify({'message': 'Successfully joined waitlist'}), 200
     except Exception as e:
         logging.error(f"Error adding to waitlist: {e}")
         return jsonify({'error': 'Error joining waitlist'}), 500

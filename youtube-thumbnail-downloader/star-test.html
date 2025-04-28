@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Animation Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a2a;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Star overlay */
+        .star-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTIzLDIuMWwyMi4xLDY3LjdoNzEuNGwtNTcuNyw0Mi44LDIyLjIsNjcuOC01OCwtNDIuN2wtNTcuOCw0Mi43TDg3LjMsMTEyLjZMMzAsMTkuOCwxMDEsMTkuOVoiLz48L3N2Zz4=');
+            background-size: 8px 8px;
+            opacity: 0.3;
+            z-index: 1;
+            animation: starsAnimation 300s linear infinite;
+        }
+
+        .star-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTIzLDIuMWwyMi4xLDY3LjdoNzEuNGwtNTcuNyw0Mi44LDIyLjIsNjcuOC01OCwtNDIuN2wtNTcuOCw0Mi43TDg3LjMsMTEyLjZMMzAsMTkuOCwxMDEsMTkuOVoiLz48L3N2Zz4=');
+            background-size: 5px 5px;
+            opacity: 0.2;
+            z-index: 1;
+            animation: starsAnimation 240s linear infinite reverse;
+        }
+
+        /* Star animation */
+        @keyframes starsAnimation {
+            from { background-position: 0% 0%; }
+            to { background-position: 0% 100%; }
+        }
+
+        /* Individual stars */
+        .twinkle-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.7);
+            animation: twinkleAnimation 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkleAnimation {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="star-overlay"></div>
+    <h1>Star Animation Test</h1>
+
+    <script>
+        // Create twinkling stars
+        function createTwinklingStars() {
+            const starsContainer = document.body;
+            const numberOfStars = 200;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('twinkle-star');
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random size
+                const size = 1 + Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random animation delay
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Random animation duration for more natural twinkling
+                star.style.animationDuration = `${2 + Math.random() * 4}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Initialize stars when the page is loaded
+        document.addEventListener('DOMContentLoaded', createTwinklingStars);
+    </script>
+</body>
+</html> 
