@@ -63,10 +63,16 @@
             },
             body: JSON.stringify({
               transactionalId: "cma2n8wny011ixtaawxjj822f",
-              email: "pat@persimmons.studio",
-              data,
+              email: data.email,
+              ...data
             }),
           });
+          
+          if (!response.ok) {
+            const error = await response.json().catch(() => null) || await response.text();
+            throw new Error(`Loops API Error: ${response.status} ${response.statusText} — ${JSON.stringify(error)}`);
+          }
+          
           return response;
         }
         
