@@ -18,6 +18,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({ 
         transactionalId, 
+        email,
         dataVariables: {
           name: data.name,
           email: data.email,
