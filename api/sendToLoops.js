@@ -3,7 +3,16 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end('Method Not Allowed');
 
   try {
-    const { transactionalId, email, data } = req.body;
+    const {
+      transactionalId,
+      email,
+      name,
+      podcast,
+      episodes,
+      budget,
+      referral,
+      message
+    } = req.body;
     
     const LOOPS_API_KEY = process.env.LOOPS_API_KEY;
     if (!LOOPS_API_KEY) throw new Error('LOOPS_API_KEY not set');
@@ -18,15 +27,15 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({ 
         transactionalId, 
-        email,
+        email: DESTINATION,
         dataVariables: {
-          name: data.name,
-          email: data.email,
-          podcast: data.podcast,
-          episodes: data.episodes,
-          budget: data.budget,
-          referral: data.referral,
-          message: data.message
+          name,
+          email,
+          podcast,
+          episodes,
+          budget,
+          referral,
+          message
         }
       }),
     });
@@ -40,4 +49,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-} 
+}
