@@ -19,7 +19,12 @@ export default async function handler(req, res) {
       body: JSON.stringify({ 
         transactionalId, 
         email: DESTINATION, 
-        data 
+        name: data.name,
+        podcast: data.podcast,
+        episodes: data.episodes,
+        budget: data.budget,
+        referral: data.referral,
+        message: data.message
       }),
     });
 
