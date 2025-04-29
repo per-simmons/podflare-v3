@@ -773,7 +773,7 @@
 
                         // Loops integration function
                         async function sendToLoops(data) {
-                          await fetch("https://app.loops.so/api/v1/transactional", {
+                          const response = await fetch("https://app.loops.so/api/v1/transactional", {
                             method: "POST",
                             headers: {
                               "Content-Type": "application/json",
@@ -781,10 +781,17 @@
                             },
                             body: JSON.stringify({
                               transactionalId: "cma2n8wny011ixtaawxjj822f",
-                              email: "pat@persimmons.studio",
+                              email: data.email,
                               data,
                             }),
                           });
+
+                          if (!response.ok) {
+                            const error = await response.json().catch(() => null) || await response.text();
+                            throw new Error(`Loops API Error: ${response.status} ${response.statusText} — ${JSON.stringify(error)}`);
+                          }
+
+                          return response;
                         }
                     } catch (err) {
                         console.error('Exception when processing form:', err);
