@@ -739,53 +739,52 @@
                             console.log('Sending data:', payload);
                             
                             try {
-                                // Send data directly using fetch API
-                                const response = await fetch('https://zfupwcphvsewqkssblrj.supabase.co/rest/v1/podflare_leads_submission', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0ODQxOTQsImV4cCI6MjA2MDA2MDE5NH0.JxQTBfOnww8L6gRassMuuwFmG0hZlGHx7Wk0K08-rvw',
-                                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0ODQxOTQsImV4cCI6MjA2MDA2MDE5NH0.JxQTBfOnww8L6gRassMuuwFmG0hZlGHx7Wk0K08-rvw',
-                                        'Prefer': 'return=representation'
-                                    },
-                                    body: JSON.stringify(payload)
-                                });
+                                // Send data to Loops API
+                                await sendToLoops(payload);
+                                console.log('Form submitted successfully to Loops!');
+                                document.getElementById('formSuccessMessage').style.display = 'block';
+                                contactForm.reset();
                                 
-                                if (!response.ok) {
-                                    const errorText = await response.text();
-                                    console.error('Error submitting form:', response.status, errorText);
-                                    document.getElementById('formErrorMessage').style.display = 'block';
-                                } else {
-                                    const result = await response.json();
-                                    console.log('Form submitted successfully!', result);
-                                    document.getElementById('formSuccessMessage').style.display = 'block';
-                                    contactForm.reset();
+                                // Send to Lindy webhook
+                                try {
+                                    console.log('Sending data to Lindy webhook...');
+                                    const lindyResponse = await fetch('https://public.lindy.ai/api/v1/webhooks/lindy/1a96b69d-cec9-47ea-81b3-f194cf273e4f', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Authorization': 'Bearer hSjEptdcxFMSoWcVgmXtrQSCbGtCFvdL'
+                                        },
+                                        body: JSON.stringify(payload)
+                                    });
                                     
-                                    // Send to Lindy webhook
-                                    try {
-                                        console.log('Sending data to Lindy webhook...');
-                                        const lindyResponse = await fetch('https://public.lindy.ai/api/v1/webhooks/lindy/1a96b69d-cec9-47ea-81b3-f194cf273e4f', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'Authorization': 'Bearer hSjEptdcxFMSoWcVgmXtrQSCbGtCFvdL'
-                                            },
-                                            body: JSON.stringify(payload)
-                                        });
-                                        
-                                        if (lindyResponse.ok) {
-                                            console.log('Lindy webhook notification sent successfully!');
-                                        } else {
-                                            console.warn('Lindy webhook notification failed, but form was submitted:', await lindyResponse.text());
-                                        }
-                                    } catch (lindyError) {
-                                        console.warn('Error sending to Lindy webhook, but form was submitted:', lindyError);
+                                    if (lindyResponse.ok) {
+                                        console.log('Lindy webhook notification sent successfully!');
+                                    } else {
+                                        console.warn('Lindy webhook notification failed, but form was submitted:', await lindyResponse.text());
                                     }
+                                } catch (lindyError) {
+                                    console.warn('Error sending to Lindy webhook, but form was submitted:', lindyError);
                                 }
                             } catch (err) {
                                 console.error('Exception when submitting form:', err);
                                 document.getElementById('formErrorMessage').style.display = 'block';
                             }
+                        }
+
+                        // Loops integration function
+                        async function sendToLoops(data) {
+                          await fetch("https://app.loops.so/api/v1/transactional", {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization: "Bearer b7a8ef651c5cfa64cbd98540f95e6a1a",
+                            },
+                            body: JSON.stringify({
+                              transactionalId: "cma2n8wny011ixtaawxjj822f",
+                              email: "pat@persimmons.studio",
+                              data,
+                            }),
+                          });
                         }
                     } catch (err) {
                         console.error('Exception when processing form:', err);

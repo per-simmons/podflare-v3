@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supabase REST API Test</title>
+    <title>Loops API Test</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,13 +36,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Supabase REST API Test</h1>
+        <h1>Loops API Test</h1>
         
-        <button id="testInsert">Test REST API Insert</button>
+        <button id="testInsert">Test Loops API</button>
         
         <div class="result">
             <h3>Results:</h3>
-            <pre id="results">Click a button to test Supabase functionality...</pre>
+            <pre id="results">Click a button to test Loops functionality...</pre>
         </div>
     </div>
 
@@ -53,10 +53,27 @@
             console.log(message)
         }
         
-        // Test REST API insert button
+        // Loops integration function
+        async function sendToLoops(data) {
+          const response = await fetch("https://app.loops.so/api/v1/transactional", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer b7a8ef651c5cfa64cbd98540f95e6a1a",
+            },
+            body: JSON.stringify({
+              transactionalId: "cma2n8wny011ixtaawxjj822f",
+              email: "pat@persimmons.studio",
+              data,
+            }),
+          });
+          return response;
+        }
+        
+        // Test Loops API insert button
         document.getElementById('testInsert').addEventListener('click', async () => {
             try {
-                logResult('Testing REST API insert...')
+                logResult('Testing Loops API...')
                 
                 // Create test data
                 const testData = {
@@ -66,28 +83,19 @@
                     episodes: 4,
                     budget: '$3,000 – $4,000',
                     referral: 'Test',
-                    message: 'This is a test submission via REST API',
+                    message: 'This is a test submission via Loops API',
                     created_at: new Date().toISOString()
                 }
                 
-                // Directly use fetch with the REST API
-                const response = await fetch('https://zfupwcphvsewqkssblrj.supabase.co/rest/v1/podflare_leads_submission', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDQ4NDE5NCwiZXhwIjoyMDYwMDYwMTk0fQ.HsR-qeyLZccwjH2Rjv4D-qgDKAP2sFe7GWN06nnAOh8',
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXB3Y3BodnNld3Frc3NibHJqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDQ4NDE5NCwiZXhwIjoyMDYwMDYwMTk0fQ.HsR-qeyLZccwjH2Rjv4D-qgDKAP2sFe7GWN06nnAOh8',
-                        'Prefer': 'return=minimal'
-                    },
-                    body: JSON.stringify(testData)
-                })
+                // Use Loops API
+                const response = await sendToLoops(testData);
                 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => null) || await response.text();
-                    logResult(`REST API Error: ${response.status} ${response.statusText}\n\n${JSON.stringify(errorData, null, 2)}`)
+                    logResult(`Loops API Error: ${response.status} ${response.statusText}\n\n${JSON.stringify(errorData, null, 2)}`)
                 } else {
                     const data = await response.json().catch(() => 'No response body (success)');
-                    logResult(`REST API Insert Successful!\n\nStatus: ${response.status}\n\nData: ${JSON.stringify(data, null, 2)}`)
+                    logResult(`Loops API Request Successful!\n\nStatus: ${response.status}\n\nData: ${JSON.stringify(data, null, 2)}`)
                 }
             } catch (err) {
                 logResult(`Exception: ${err.message}\n\n${err.stack}`)
