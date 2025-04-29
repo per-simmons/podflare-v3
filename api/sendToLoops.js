@@ -4,12 +4,15 @@ export default async function handler(req, res) {
 
   try {
     const { transactionalId, email, data } = req.body;
+    
+    const LOOPS_API_KEY = process.env.LOOPS_API_KEY;
+    if (!LOOPS_API_KEY) throw new Error('LOOPS_API_KEY not set');
 
     const loopsRes = await fetch('https://app.loops.so/api/v1/transactional', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer b7a8ef651c5cfa64cbd98540f95e6a1a',
+        Authorization: `Bearer ${LOOPS_API_KEY}`,
       },
       body: JSON.stringify({ transactionalId, email, data }),
     });
