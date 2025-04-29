@@ -5,19 +5,22 @@ export default async function handler(req, res) {
   try {
     const {
       transactionalId,
-      email,
+      email: destinationEmail,
+      dataVariables = {}
+    } = req.body;
+
+    const {
       name,
+      email,
       podcast,
       episodes,
       budget,
       referral,
       message
-    } = req.body;
-    
+    } = dataVariables;
+
     const LOOPS_API_KEY = process.env.LOOPS_API_KEY;
     if (!LOOPS_API_KEY) throw new Error('LOOPS_API_KEY not set');
-
-    const DESTINATION = 'pat@persimmons.studio';
 
     const loopsRes = await fetch('https://app.loops.so/api/v1/transactional', {
       method: 'POST',
@@ -25,25 +28,17 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${LOOPS_API_KEY}`,
       },
-      body: JSON.stringify({ 
-        transactionalId, 
-        email: DESTINATION,
-        dataVariables: {
-          name,
-          email,
-          podcast,
-          episodes,
-          budget,
-          referral,
-          message
-        }
+      body: JSON.stringify({
+        transactionalId,
+        email: destinationEmail,     // goes only to you
+        dataVariables                // send everything else intact
       }),
     });
 
-    if (!loopsRes.ok)
-      return res
-        .status(loopsRes.status)
-        .json(await loopsRes.json().catch(() => ({ error: 'Loops error' })));
+    if (!loopsRes.ok) {
+      const err = await loopsRes.json().catch(() => ({ error: 'Loops error' }));
+      return res.status(loopsRes.status).json(err);
+    }
 
     return res.status(200).json({ ok: true });
   } catch (err) {
