@@ -8,13 +8,19 @@ export default async function handler(req, res) {
     const LOOPS_API_KEY = process.env.LOOPS_API_KEY;
     if (!LOOPS_API_KEY) throw new Error('LOOPS_API_KEY not set');
 
+    const DESTINATION = 'pat@persimmons.studio';
+
     const loopsRes = await fetch('https://app.loops.so/api/v1/transactional', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${LOOPS_API_KEY}`,
       },
-      body: JSON.stringify({ transactionalId, email, data }),
+      body: JSON.stringify({ 
+        transactionalId, 
+        email: DESTINATION, 
+        data 
+      }),
     });
 
     if (!loopsRes.ok)
