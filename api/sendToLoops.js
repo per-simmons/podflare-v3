@@ -19,6 +19,9 @@ export default async function handler(req, res) {
       message
     } = dataVariables;
 
+    // Extract first name from full name
+    const firstName = name.split(' ')[0];
+
     const LOOPS_API_KEY = process.env.LOOPS_API_KEY;
     if (!LOOPS_API_KEY) throw new Error('LOOPS_API_KEY not set');
 
@@ -57,7 +60,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         transactionalId: confirmationId,
         email,     // send to the user
-        dataVariables: { name }  // only pass name for this email
+        dataVariables: { firstName }  // only pass firstName for this email
       }),
     });
 
