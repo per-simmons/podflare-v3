@@ -740,7 +740,7 @@ h1, h2, h3, .display-4 {
         padding-right: 12px;
         font-size: 0.9rem;
     }
-    
+
     .nav-tabs {
         flex-wrap: nowrap !important;
     }
@@ -775,8 +775,8 @@ h1, h2, h3, .display-4 {
 }
 
 @media (max-width: 768px) {
-    .d-mobile-none {
-        display: none !important;
+.d-mobile-none {
+    display: none !important;
     }
 }
 

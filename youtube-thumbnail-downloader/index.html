@@ -124,7 +124,7 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="container tool-container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -230,9 +230,9 @@
     
     <!-- Mobile nav toggle script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
             
             if (menuToggle) {
                 menuToggle.addEventListener('click', function() {
@@ -247,7 +247,7 @@
                 const toggle = dropdown.querySelector('.dropdown-toggle');
                 if (toggle && window.innerWidth <= 768) {
                     toggle.addEventListener('click', function(e) {
-                        e.preventDefault();
+            e.preventDefault();
                         dropdown.classList.toggle('active');
                     });
                 }
@@ -260,9 +260,9 @@
                     navbar.classList.add('scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
-                }
-            });
+                        }
         });
+    });
     </script>
 </body>
 </html> 

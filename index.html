@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PodFlare | Podcast Marketing Agency</title>
+    <title>Podcast Marketing Agency for B2B Brands | PodFlare</title>
+    <meta name="description" content="We help B2B podcasts grow through high-impact content—long-form editing, short-form clips, thumbnails, and social posts. All done-for-you.">
     <link rel="stylesheet" href="./app/styles/main.css">
     <link rel="stylesheet" href="./app/styles/mobile-breaks.css">
     <link rel="stylesheet" href="./app/styles/headline-fix.css">
@@ -749,17 +750,17 @@
                                 try {
                                     console.log('Sending data to Lindy webhook...');
                                     const lindyResponse = await fetch('https://public.lindy.ai/api/v1/webhooks/lindy/1a96b69d-cec9-47ea-81b3-f194cf273e4f', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
                                             'Authorization': 'Bearer hSjEptdcxFMSoWcVgmXtrQSCbGtCFvdL'
-                                        },
-                                        body: JSON.stringify(payload)
-                                    });
-                                    
+                                    },
+                                    body: JSON.stringify(payload)
+                                });
+                                
                                     if (lindyResponse.ok) {
                                         console.log('Lindy webhook notification sent successfully!');
-                                    } else {
+                                } else {
                                         console.warn('Lindy webhook notification failed, but form was submitted:', await lindyResponse.text());
                                     }
                                 } catch (lindyError) {

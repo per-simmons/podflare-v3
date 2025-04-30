@@ -223,7 +223,7 @@ def join_waitlist():
     try:
         # Just log the email instead of saving it
         logging.info(f"Would have added to waitlist: {email}")
-        return jsonify({'message': 'Successfully joined waitlist'}), 200
+            return jsonify({'message': 'Successfully joined waitlist'}), 200
     except Exception as e:
         logging.error(f"Error adding to waitlist: {e}")
         return jsonify({'error': 'Error joining waitlist'}), 500
