@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     }
 
     // Second fetch: Send confirmation to the user
-    const confirmationId = 'YOUR_NEW_CONFIRMATION_EMAIL_ID';
+    const confirmationId = 'cma3xdpdk0z2t9w8ppmgbiimt';
     const confirmRes = await fetch('https://app.loops.so/api/v1/transactional', {
       method: 'POST',
       headers: {
